@@ -1,0 +1,41 @@
+
+Problem one : The sign of rock paper scissors happens three times 
+
+Problem - the consdition is being checked three times
+
+Fix - We want to make it check only one time
+
+How i fixed it - Made an variable that checks if a variable is threeand only does prints the output when three while 
+                the iritation we add the value to be thre 
+
+Time - five minutes to fix No AI
+
+Problem two - The Opponent choice is not being processed properly
+
+Problem - The Choice is being compared to player option instead of player option being comapared to choice
+
+Fix - by making player option being comapared to choice
+
+Time - Not intented to fnd this bug seen this directly while seeing code
+
+Problem three : the AI is not giving correct options even when it only has correct option to choose from
+
+Problem : somehow the PlayerChoice was being checkfalseOption variable so since the Opponent also uses that same it triggered the invalad error option
+
+Fix : Used Seperate checkfalseOption for opponenet and player
+
+Time : 20minutes had to cout  and test a lot and no AI
+
+
+
+
+Problem four : Whole AI is buggish.A lot of random things happens
+
+problem : used playerchoice instead of opponent choice
+
+fix : just replaced the opponent choice
+
+Time : 30minutes did a lot of nonsense after a while.Realized the problem
+
+
+Time Taken to make 2-3hours didnt keep track

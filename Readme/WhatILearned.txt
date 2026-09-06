@@ -1,0 +1,7 @@
+Learned lambda function and how to use it ,havent learnt how it works
+Learned to use std::transform of lib of algorithm 
+Learned to get random element from vectors or array
+Learned to use random lib better
+Learned to use this thread to sleep with chrono
+
+
