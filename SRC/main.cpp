@@ -9,6 +9,7 @@ int main ()
     std::string PlayerChoice;
     std::string OpponentChoice;
 
+
     game.StartDown();
     PlayerChoice = game.MainChoice();
     OpponentChoice = game.Opponent_Choose();
@@ -17,5 +18,6 @@ int main ()
     game.Process_Opponent_choosed(OpponentChoice);
     
     game.evulate_win(PlayerChoice,OpponentChoice);
+
     return 0;   
 }

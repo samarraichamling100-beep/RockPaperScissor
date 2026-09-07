@@ -259,27 +259,39 @@ class RockPaperScissors
             if (playerchoice == "rock" && opponentchoice == "paper")
             {
                 std::cout << you_lose_sign << std::endl;
+                OpponentIritableChecker = 0;
+                PlayerIritableChecker = 0;
             }
-            if (playerchoice == "paper" && opponentchoice == "scissors")
+            if (playerchoice == "paper" && opponentchoice == "scissor")
             {
                 std::cout << you_lose_sign << std::endl;
+                OpponentIritableChecker = 0;
+                PlayerIritableChecker = 0;
             }
             if (playerchoice == "scissor" && opponentchoice == "rock")
             {
                 std::cout << you_lose_sign << std::endl;
+                OpponentIritableChecker = 0;
+                PlayerIritableChecker = 0;
             }
             //Didnt use else to not cause weird things
             if (opponentchoice == "rock" && playerchoice == "paper")
             {
                 std::cout << you_win_sign << std::endl;
+                OpponentIritableChecker = 0;
+                PlayerIritableChecker = 0;
             }
-            if (opponentchoice == "paper" && playerchoice == "scissors")
+            if (opponentchoice == "paper" && playerchoice == "scissor")
             {
                 std::cout << you_win_sign << std::endl;
+                OpponentIritableChecker = 0;
+                PlayerIritableChecker = 0;
             }
             if (opponentchoice == "scissor" && playerchoice == "rock")
             {
                 std::cout << you_win_sign << std::endl;
+                OpponentIritableChecker = 0;
+                PlayerIritableChecker = 0;
             }
         }
     }
