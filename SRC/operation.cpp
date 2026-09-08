@@ -14,6 +14,8 @@ class RockPaperScissors
     private:
     std::string Player_Choice;
     std::string Opponent_Choice;
+    unsigned int win = 0;
+    unsigned int loss = 0;
     //Copied these strings from google
     std::string you_win_sign = 
     "[*]  YOU WIN !!!  [*]\n"
@@ -30,13 +32,6 @@ class RockPaperScissors
     "   (.)     (.)     (.)\n"
     "  / | \\   / | \\   / | \\\n"
     "======================\n";
-    //Not these
-    int PlayerFalseChoice = 0;
-    int OpponentFalseChoice = 0;
-    int PlayerIritableChecker = 0;
-    int OpponentIritableChecker = 0;
-
-
     public:
     std::string PlayerLeftChoice[3] = {
     //Copied these strings from google
@@ -124,7 +119,7 @@ class RockPaperScissors
             Player_Choice.begin(),
             Player_Choice.end(),
             Player_Choice.begin(),
-            [](auto & letter)
+            [](unsigned char letter)
             {
                 return std::tolower(letter);
             }
@@ -137,7 +132,7 @@ class RockPaperScissors
         //MAke the random index generator
         std::uniform_int_distribution <std::size_t> OpponentChoiceIndexGen(0,GameChoices.size() - 1);
         //Uses the index generator to get the index
-        int OpponentChoiceIndex = OpponentChoiceIndexGen(gen);
+        std::size_t OpponentChoiceIndex = OpponentChoiceIndexGen(gen);
         //Uses the index from the list to get random 
         Opponent_Choice = GameChoices[OpponentChoiceIndex];
         return Opponent_Choice;
@@ -145,153 +140,110 @@ class RockPaperScissors
 
     void Process_Player_choosed(std::string playerchoice)
     {
+        std::this_thread::sleep_for(std::chrono::seconds(1));
+        bool valid = false;
+
         for (auto &Choice : GameChoices)
         {
-            //If choice is not equal to all each of the choices
-            if (playerchoice != Choice)
+            if (playerchoice == Choice)
             {
-                PlayerFalseChoice ++;
-                //we add it gets to 2 if 3 then its invalid options
+                valid = true;
+                break;
             }
-            if(PlayerFalseChoice == 3)
+        }
+
+        if (!valid)
+        {
+            std::cout << "Invalid choice!\n";
+        }
+        else
+        {
+            if (playerchoice == "rock")
             {
-                //Three means invalid options
-                std::cout << "Please choose from the options {scissor,rock,paper} " << std::endl;
-                PlayerFalseChoice = 0;
+                std::cout << "Player Chose:\n";
+                std::cout << PlayerLeftChoice[0] << std::endl;
             }
-            else 
+            else if (playerchoice == "paper")
             {
-                if(playerchoice == "rock")
-                {
-                    PlayerIritableChecker ++;
-                    if (PlayerIritableChecker == 3)
-                    {
-                        std::cout << "Player Chose" << std::endl;
-                        std::cout << OpponentRightChoice[0] << std::endl;
-                        PlayerIritableChecker = 0;
-                    }
-                }
-                if(playerchoice == "paper")
-                {
-                    PlayerIritableChecker ++;
-                    if (PlayerIritableChecker == 3)
-                    {
-                        std::cout << "Player Chose" << std::endl;
-                        std::cout << OpponentRightChoice[1] << std::endl;
-                        PlayerIritableChecker = 0;
-                    }
-                }
-                if(playerchoice == "scissor")
-                {
-                    PlayerIritableChecker ++;
-                    if (PlayerIritableChecker == 3)
-                    {
-                        std::cout << "Player Chose" << std::endl;
-                        std::cout << OpponentRightChoice[2] << std::endl;
-                        PlayerIritableChecker = 0;
-                    }
-                }
+                std::cout << "Player Chose:\n";
+                std::cout << PlayerLeftChoice[1] << std::endl;
+            }
+            else if (playerchoice == "scissor")
+            {
+                std::cout << "Player Chose:\n";
+                std::cout << PlayerLeftChoice[2] << std::endl;
             }
         }
     }
-
     void Process_Opponent_choosed(std::string opponentchoice)
 
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
-        for (auto &Choice : GameChoices)
+        if(opponentchoice == "rock")
         {
-
-            if (opponentchoice != Choice)
-            {
-                OpponentFalseChoice ++;
-            }
-            if(OpponentFalseChoice == 3)
-            {
-                std::cout << "Please choose from the options {scissor,rock,paper} " << std::endl;
-            }
-
-            else 
-            {
-                if(opponentchoice == "rock")
-                {
-                    OpponentIritableChecker ++;
-                    if (OpponentIritableChecker == 3)
-                    {
-                        std::cout << "Opponent Chose" << std::endl;
-                        std::cout << PlayerLeftChoice[0] << std::endl;
-                        OpponentIritableChecker = 0;
-                    }
-                }
-                if(opponentchoice == "paper")
-                {
-                    OpponentIritableChecker ++;
-                    if (OpponentIritableChecker == 3)
-                    {
-                        std::cout << "Opponent Chose" << std::endl;
-                        std::cout << PlayerLeftChoice[1] << std::endl;
-                        OpponentIritableChecker = 0;
-                    }
-                }
-                if(opponentchoice == "scissor")
-                {
-                    OpponentIritableChecker ++;
-                    if (OpponentIritableChecker == 3)
-                    {
-                        std::cout << "Opponent Chose" << std::endl;
-                        std::cout << PlayerLeftChoice[2] << std::endl;
-                        OpponentIritableChecker = 0;
-                    }
-                }
-            }
+            std::cout << "Opponent Chose" << std::endl;
+            std::cout << OpponentRightChoice[0] << std::endl;
         }
+                
+        else if(opponentchoice == "paper")
+        {
+            std::cout << "Opponent Chose" << std::endl;
+            std::cout << OpponentRightChoice[1] << std::endl;
+        }
+        else if(opponentchoice == "scissor")
+        {
+            std::cout << "Opponent Chose" << std::endl;
+            std::cout << OpponentRightChoice[2] << std::endl;
+        }
+            
     }
-    void evulate_win (std::string playerchoice,std::string opponentchoice)
+    void evulate_win (std::string playerchoice,std::string opponentchoice,int rounds)
     {
         std::this_thread::sleep_for(std::chrono::seconds(2));
-
         if (playerchoice == opponentchoice)
         {
-            std::cout << "Its a draw" << std::endl;
+            std::cout << "It's a draw\n";
         }
+        else if (
+            (playerchoice == "rock" && opponentchoice == "scissor") ||
+            (playerchoice == "paper" && opponentchoice == "rock") ||
+            (playerchoice == "scissor" && opponentchoice == "paper")
+            )
+            {
+                std::cout << you_win_sign << '\n';
+                win += 1;
+            }
         else
         {
-            if (playerchoice == "rock" && opponentchoice == "paper")
+
+            std::cout << you_lose_sign << '\n';
+            loss += 1;
+        }
+        CheckWin(& rounds);
+    }
+    void CheckWin(int *rounds)
+    {
+        if (*rounds == 2)
+        {
+            std::cout << "It is being checked" << std::endl;
+
+            std::cout << "You have won "
+                  << win << " times" << std::endl;
+
+            std::cout << "You have lost "
+                  << loss << " times" << std::endl;
+
+            if (win == loss)
             {
-                std::cout << you_lose_sign << std::endl;
-                OpponentIritableChecker = 0;
-                PlayerIritableChecker = 0;
+                std::cout << "Overall Draw!" << std::endl;
             }
-            if (playerchoice == "paper" && opponentchoice == "scissor")
+            else if (win > loss)
             {
-                std::cout << you_lose_sign << std::endl;
-                OpponentIritableChecker = 0;
-                PlayerIritableChecker = 0;
+                std::cout << "You have won the game!" << std::endl;
             }
-            if (playerchoice == "scissor" && opponentchoice == "rock")
+            else
             {
-                std::cout << you_lose_sign << std::endl;
-                OpponentIritableChecker = 0;
-                PlayerIritableChecker = 0;
-            }
-            //Didnt use else to not cause weird things
-            if (opponentchoice == "rock" && playerchoice == "paper")
-            {
-                std::cout << you_win_sign << std::endl;
-                OpponentIritableChecker = 0;
-                PlayerIritableChecker = 0;
-            }
-            if (opponentchoice == "paper" && playerchoice == "scissor")
-            {
-                std::cout << you_win_sign << std::endl;
-                OpponentIritableChecker = 0;
-                PlayerIritableChecker = 0;
-            }
-            if (opponentchoice == "scissor" && playerchoice == "rock")
-            {
-                std::cout << you_win_sign << std::endl;
-                OpponentIritableChecker = 0;
-                PlayerIritableChecker = 0;
+            std::cout << "You have lost the game!" << std::endl;
             }
         }
     }
